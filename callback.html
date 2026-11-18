@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Connexion – DayKlip</title>
+<style>
+  :root { color-scheme: light dark; --bg: #fafafa; --fg: #1a1a1a; --muted: #666; --accent: #e5322d; --box: #fff; }
+  @media (prefers-color-scheme: dark) { :root { --bg: #121212; --fg: #eee; --muted: #aaa; --box: #1e1e1e; } }
+  body { margin: 0; background: var(--bg); color: var(--fg); font: 17px/1.6 system-ui, sans-serif; }
+  main { max-width: 640px; margin: 0 auto; padding: 48px 16px; }
+  h1 { font-size: 1.6rem; } .muted { color: var(--muted); }
+  code { display: block; background: var(--box); padding: 12px; border-radius: 8px; word-break: break-all; font-size: .85rem; }
+  button { margin-top: 12px; padding: 10px 18px; border: 0; border-radius: 8px; background: var(--accent); color: #fff; font-size: 1rem; cursor: pointer; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Connexion autorisée</h1>
+  <p>Copie l'adresse ci-dessous et colle-la dans le terminal de la pipeline DayKlip Clipper, puis ferme cette page.</p>
+  <code id="url"></code>
+  <button id="copy">Copier</button>
+  <p class="muted" id="err"></p>
+</main>
+<script>
+  const url = location.href;
+  document.getElementById('url').textContent = url;
+  const p = new URLSearchParams(location.search);
+  if (p.get('error')) document.getElementById('err').textContent = 'Erreur renvoyée : ' + p.get('error') + ' ' + (p.get('error_description') || '');
+  document.getElementById('copy').onclick = () => navigator.clipboard.writeText(url).then(() => {
+    document.getElementById('copy').textContent = 'Copié ✓';
+  });
+</script>
+</body>
+</html>
